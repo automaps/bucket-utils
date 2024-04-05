@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "bucket-utils"
+version = "0.1.0"
+description = "Utility classes for interacting with cloud buckets"
+authors = ["Magnus Hansen <maha@mapspeople.com>"]
+readme = "README.md"
+packages = [{include = "bucket_utils"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+google-cloud-storage = ">=2.0.0"
+crc32c = ">=2.3.0"
+pytz = ">=2024.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
