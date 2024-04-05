@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "bucket-utils"
+name = "spand"
 version = "0.1.0"
 description = "Utility classes for interacting with cloud buckets"
 authors = ["Magnus Hansen <maha@mapspeople.com>"]
