@@ -43,6 +43,7 @@ class GoogleCloudBucket(BucketInterface):
         """
         self._bucket = None
         self.bucket_name = bucket_name
+        work_dir = str(work_dir)
         if work_dir != "" and work_dir.endswith("/"):
             work_dir = f"{work_dir}/"
         self._work_dir = work_dir  # Either empty string or string that ends with slash

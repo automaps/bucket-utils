@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "spand"
-version = "0.1.1"
+version = "0.1.2"
 description = "Utility classes for interacting with cloud buckets"
 authors = ["Magnus Hansen <maha@mapspeople.com>"]
 readme = "README.md"
