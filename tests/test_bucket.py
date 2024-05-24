@@ -63,7 +63,9 @@ def download_directory(tmp_path) -> Path:
     return dir
 
 
-def test_upload_download_blob_to_bucket(bucket: LocalBucket, file_to_upload: Path, result_path: Path):
+def test_upload_download_blob_to_bucket(
+    bucket: LocalBucket, file_to_upload: Path, result_path: Path
+):
     blob_name = "my_upload_file.bin"
     bucket.upload_filepath(file_to_upload, blob_name)
     bucket.download_blob_to_filepath(result_path, blob_name)
