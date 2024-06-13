@@ -2,6 +2,7 @@ import io
 import shutil
 from datetime import datetime
 from pathlib import Path
+from tempfile import SpooledTemporaryFile
 from typing import List, Optional, Iterable
 
 import crc32c
@@ -29,6 +30,12 @@ def _upload(file, upload_path):
     if isinstance(file, io.StringIO):
         file = file.read()
         mode = "x"
+    if isinstance(file, SpooledTemporaryFile):
+        file = iter(file).read()
+        if isinstance(file, str):
+            mode = "x"
+        elif isinstance(file, bytes):
+            mode = "xb"
     with open(upload_path, mode) as blob_file:
         blob_file.write(file)
 
@@ -93,6 +100,17 @@ class LocalBucket(BucketInterface):
         """
         try:
             with open(self.dir / blob) as file:
+                return file.read()
+        except FileNotFoundError:
+            raise BlobNotFoundException(blob)
+
+    def download_blob_as_bytes(self, blob: str) -> bytes:
+        """
+        Raises:
+            BlobNotFoundException: The blob was not found in the bucket.
+        """
+        try:
+            with open(self.dir / blob, "rb") as file:
                 return file.read()
         except FileNotFoundError:
             raise BlobNotFoundException(blob)
