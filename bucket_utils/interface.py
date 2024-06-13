@@ -100,6 +100,14 @@ class BucketInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def download_blob_as_bytes(self, blob: str) -> bytes:
+        """
+        Raises:
+            BlobNotFoundException: The blob was not found in the bucket.
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def generate_signed_url(self, blob: str, **kwargs) -> str:
         """
         Raises:

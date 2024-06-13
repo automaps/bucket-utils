@@ -2,6 +2,7 @@ import filecmp
 import unittest
 from datetime import datetime
 from pathlib import Path
+from tempfile import SpooledTemporaryFile
 from unittest.mock import Mock
 
 import crc32c
@@ -222,3 +223,27 @@ def test_checksums_should_be_equal(bucket):
 def test_checksum_fails_if_blob_does_not_exist(bucket):
     with pytest.raises(BlobNotFoundException):
         bucket.crc32c_checksum("blob_that_does_not_exist.txt")
+
+
+def test_should_upload_spooled_temporary_textfile(bucket):
+    file = SpooledTemporaryFile(mode="w")
+    data = "some data"
+    file.write(data)
+    file.seek(0)
+    blob = "test_file.txt"
+
+    bucket.upload_file(file, blob=blob)
+
+    assert data == bucket.download_blob_as_text(blob)
+
+
+def test_should_upload_spooled_temporary_binaryfile(bucket):
+    file = SpooledTemporaryFile(mode="wb")
+    data = b"some data"
+    file.write(data)
+    file.seek(0)
+    blob = "test_file.bin"
+
+    bucket.upload_file(file, blob=blob)
+
+    assert data == bucket.download_blob_as_bytes(blob)
